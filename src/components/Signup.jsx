@@ -6,21 +6,27 @@ export default function Signup() {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
 
-    let faceio;
-    useEffect(() => {
-        faceio = new faceIO("fioa4bf3");
-    }, []);
-
 
     const handleSignUp = async () => {
-        try {
 
+       let faceio = new faceIO("fioa4bf3");
+        try {
+            let response = await faceio.enroll({
+                locale: "auto",
+                payload: {
+                    email,
+                    name
+                },
+                enrollIntroTimeout: 5,
+                userConsent: true
+            });
+                        
             console.log(` Unique Facial ID: ${response.facialId}
-          Enrollment Date: ${response.timestamp}
-          Gender: ${response.details.gender}
-          Age Approximation: ${response.details.age}`);
+            Enrollment Date: ${response.timestamp}
+            Gender: ${response.details.gender}
+            Age Approximation: ${response.details.age}`);
         } catch (error) {
-            console.log(error);
+            console.log('ERROR:' ,error);
         }
     };
 
@@ -28,7 +34,7 @@ export default function Signup() {
     return (
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-lg">
-                <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
+                <h1 className="text-center text-2xl font-bold text-red-700 sm:text-3xl">
                     Get started today
                 </h1>
                 <div className="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl">
@@ -79,7 +85,7 @@ export default function Signup() {
                     </div>
 
                     <button
-                        className="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+                        className="block w-full rounded-lg bg-red-700 px-5 py-3 text-sm font-medium text-white"
                         onClick={handleSignUp}
                     >
                         Sign up
