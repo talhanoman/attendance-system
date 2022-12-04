@@ -5,28 +5,31 @@ import { API_KEY } from '../api/index'
 export default function Signup() {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
+    const [roll, setRoll] = useState('')
 
 
     const handleSignUp = async () => {
-
-       let faceio = new faceIO("fioa4bf3");
+        let faceio = new faceIO("fioa4bf3");
         try {
             let response = await faceio.enroll({
                 locale: "auto",
                 payload: {
                     email,
-                    name
+                    name, 
+                    roll
                 },
                 enrollIntroTimeout: 5,
                 userConsent: true
             });
-                        
+            faceio.restartSession();
+
             console.log(` Unique Facial ID: ${response.facialId}
             Enrollment Date: ${response.timestamp}
             Gender: ${response.details.gender}
             Age Approximation: ${response.details.age}`);
+            console.log('Reset', restart)
         } catch (error) {
-            console.log('ERROR:' ,error);
+            console.log('ERROR:', error);
         }
     };
 
@@ -79,6 +82,20 @@ export default function Signup() {
                                 className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
+                            />
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <label htmlFor="Roll" className="text-sm font-medium">Roll No.</label>
+
+                        <div className="relative mt-1">
+                            <input
+                                type="text"
+                                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
+                                value={roll}
+                                onChange={(e) => setRoll(e.target.value)}
                             />
 
                         </div>

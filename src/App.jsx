@@ -3,37 +3,18 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Welcome from './components/Welcome';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Admin from './components/Admin';
 import './App.css'
 
 
 function App() {
-  let faceio;
-  useEffect(() => {
-    faceio = new faceIO("fioa4bf3");
-  }, []);
-
-
-
-  const handleLogIn = async () => {
-    try {
-      let response = await faceio.authenticate({
-        locale: "auto",
-      })
-
-      console.log(` Unique Facial ID: ${response.facialId}
-          PayLoad: ${response.payload}
-          `);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Welcome />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/admin' element={<Admin />} />
       </Routes>
     </Router>
     // <section>
