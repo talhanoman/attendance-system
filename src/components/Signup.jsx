@@ -1,33 +1,39 @@
 import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import { API_KEY } from '../api/index'
-
+import validator from "validator"
 export default function Signup() {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [roll, setRoll] = useState('')
-
+    const [emailError, setEmailError] = useState('hidden')
 
     const handleSignUp = async () => {
         let faceio = new faceIO("fioa4bf3");
         try {
-            let response = await faceio.enroll({
-                locale: "auto",
-                payload: {
-                    email,
-                    name, 
-                    roll
-                },
-                enrollIntroTimeout: 5,
-                userConsent: true
-            });
-            faceio.restartSession();
+            if (validator.isEmail(email)) {
+                let response = await faceio.enroll({
+                    locale: "auto",
+                    payload: {
+                        email,
+                        name,
+                        roll
+                    },
+                    enrollIntroTimeout: 5,
+                    userConsent: true
+                });
+                faceio.restartSession();
 
-            console.log(` Unique Facial ID: ${response.facialId}
-            Enrollment Date: ${response.timestamp}
-            Gender: ${response.details.gender}
-            Age Approximation: ${response.details.age}`);
-            console.log('Reset', restart)
+                console.log(` Unique Facial ID: ${response.facialId}
+                Enrollment Date: ${response.timestamp}
+                Gender: ${response.details.gender}
+                Age Approximation: ${response.details.age}`);
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            }else{
+                setEmailError('block')
+            }        
         } catch (error) {
             console.log('ERROR:', error);
         }
@@ -53,7 +59,7 @@ export default function Signup() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-
+                            <h6 className={`${emailError} text-xs text-red-500`}>Invalid Email</h6>
                             <span className="absolute inset-y-0 right-4 inline-flex items-center">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore"
 import { db } from '../api/firebase'
 import AdminTableRow from './AdminTableRow';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { ADMIN_KEY } from '../api';
 export default function Admin() {
     const location = useLocation()
@@ -31,7 +31,10 @@ export default function Admin() {
     }
     return (
         <div className='m-5'>
-            <h4 className='text-center my-3 text-2xl font-bold text-red-700'>ADMIN ATTENDANCE LOG</h4>
+            <div className="flex items-center justify-end">
+                <Link to='/'  className='p-1 border rounded-md text-red-700'>Logout</Link>
+            </div>
+                <h4 className='text-center my-3 text-2xl font-bold text-red-700'>ADMIN ATTENDANCE LOG </h4>
             <div className="overflow-hidden overflow-x-auto rounded-lg border border-gray-200 w-10/12 mx-auto">
                 <table className="min-w-full divide-y divide-gray-200 text-sm">
                     <thead className="bg-gray-100">

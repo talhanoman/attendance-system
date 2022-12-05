@@ -5,6 +5,7 @@ import { ADMIN_KEY } from '../api';
 import { db } from '../api/firebase'
 import { collection, addDoc, Timestamp } from 'firebase/firestore'
 import { Toast, callToast } from './Toast';
+import validator from 'validator';
 
 export default function Login() {
     const [toastDisplay, setToastDisplay] = useState('hidden')
@@ -32,8 +33,7 @@ export default function Login() {
                 }, 2000)
                 setTimeout(() => {
                     navigate('/admin', { state: { facialId: response.facialId } });
-                }, 4000)
-
+                }, 4000)             
             }
             else {
                 try {
@@ -49,7 +49,7 @@ export default function Login() {
                     }, 2000);
                     setTimeout(() => {
                         window.location.reload()
-                    }, 3000);
+                    }, 3000);                    
                 } catch (err) {
                     alert(err)
                 }
