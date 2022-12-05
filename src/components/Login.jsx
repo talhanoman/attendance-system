@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ADMIN_KEY } from '../api';
 // Firebase
 import { db } from '../api/firebase'
@@ -24,7 +24,7 @@ export default function Login() {
             `);
             for (var property in response.payload) {
                 tempUser.push(response.payload[property])
-            }    
+            }
             if (tempUser[0] === ADMIN_KEY) {
                 setRole('admin')
                 setTimeout(() => {
@@ -33,7 +33,7 @@ export default function Login() {
                 setTimeout(() => {
                     navigate('/admin', { state: { facialId: response.facialId } });
                 }, 4000)
-                
+
             }
             else {
                 try {
@@ -61,7 +61,7 @@ export default function Login() {
     };
     return (
         <>
-            <Toast message={role === 'admin'? 'Welcome Admin' : `Your attendance has been Marked ${user[2]}`} display={toastDisplay} />
+            <Toast message={role === 'admin' ? 'Welcome Admin' : `Your attendance has been Marked ${user[2]}`} display={toastDisplay} />
             <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-lg">
                     <h1 className="text-center text-2xl font-bold text-red-700 sm:text-3xl">
@@ -76,8 +76,12 @@ export default function Login() {
                             Mark Attendance
                         </button>
 
-                    </div>                  
+                    </div>
                 </div>
+                <p className="text-center text-sm text-gray-500">
+                    Create Account?
+                    <Link className="underline" to='/signup'>Sign Up</Link>
+                </p>
             </div>
         </>
     )
